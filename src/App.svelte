@@ -15,6 +15,13 @@
   };
 </script>
 
+<div class="fixed z-10 right-4 top-4">
+  <a
+    class="inline-block pt-2 pb-2 pl-4 pr-4 bg-black text-white"
+    href="https://github.com/mowtwo/svelte-tailwind-todo-list">Fork</a
+  >
+</div>
+
 <div
   class="w-[100vw] h-[100vh] fixed top-0 left-0 bg-[#eee] flex items-center justify-center"
 >
