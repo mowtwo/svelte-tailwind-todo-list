@@ -4,30 +4,30 @@
 
 <script lang="ts">
   export let type: Type = "normal";
+  const getBgColorType = (c: string) => `text-${c}-400`;
+  const getBdColorType = (c: string) => `border-${c}-400`;
+
+  const joinColorType = (c: string) => {
+    return `${getBgColorType(c)} ${getBdColorType(c)}`;
+  };
   const getColorType = (t: Type) => {
     switch (t) {
       case "important":
-        return "red";
+        return joinColorType("red");
       case "cancel":
-        return "gray";
+        return joinColorType("gray");
       case "confirm":
-        return "yellow";
+        return joinColorType("yellow");
       default:
-        return "blue";
+        return joinColorType("blue");
     }
   };
 </script>
 
-<!-- preload tailwind -->
-<div class="hidden text-red-400 border-red-400" />
-<div class="hidden text-gray-400 border-gray-400" />
-<div class="hidden text-yellow-400 border-yellow-400" />
-<div class="hidden text-blue-400 border-blue-400" />
-
 <button
-  class="text-{getColorType(type)}-400 h-[34px] w-[60px] border-{getColorType(
+  class="{getColorType(
     type
-  )}-400 border-solid border-[1px] select-none"
+  )} h-[34px] w-[60px] border-solid border-[1px] select-none"
   on:click
 >
   <slot />
