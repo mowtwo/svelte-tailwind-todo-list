@@ -2,16 +2,66 @@
   import Todo from "./lib/Todo.svelte";
   import TodoItem, { TodoItemEvents } from "./lib/TodoItem.svelte";
   import type { TodoItemType } from "./lib/TodoItem.svelte";
-  import { now } from "svelte/internal";
-
+  import { onMount, tick } from "svelte";
+  import { OPENED_FLAG, STORAGE_KEY } from "./data/constant";
+  import { JSONStringify, ParseJSON } from "@/utils/JSON";
+  import dayjs from "dayjs";
   let todoList: TodoItemType[] = [];
   let todoValue = "";
+  let opened = JSON.parse(localStorage.getItem(OPENED_FLAG) ?? "false");
+  let mounted = false;
+  $: {
+    if (mounted) {
+      localStorage.setItem(STORAGE_KEY, JSONStringify(todoList));
+    }
+  }
+  onMount(() => {
+    if (!opened) {
+      opened = true;
+      localStorage.setItem(OPENED_FLAG, "true");
+      todoList = [
+        {
+          id: 1,
+          text: "你好，欢迎使用",
+          finished: false,
+          deleted: false,
+          date: dayjs("2022-5-6 9:00:00").toDate(),
+        },
+        {
+          id: 2,
+          text: "目前还在开发阶段",
+          finished: false,
+          deleted: false,
+          date: dayjs("2022-5-6 9:00:00").toDate(),
+        },
+        {
+          id: 3,
+          text: "请期待后续功能，谢谢",
+          finished: false,
+          deleted: false,
+          date: dayjs("2022-5-6 9:00:00").toDate(),
+        },
+      ];
+    } else {
+      todoList = ParseJSON(localStorage.getItem(STORAGE_KEY) ?? "[]");
+    }
+    mounted = true;
+  });
   const handleDelete = (e: CustomEvent<TodoItemEvents["delete"]>) => {
     const index = todoList.findIndex((fi) => fi.id === e.detail.id);
     if (index >= 0) {
       todoList.splice(index, 1);
       todoList = todoList;
     }
+  };
+
+  // get todo items container dom ref
+  let todoItemsContainer: HTMLDivElement;
+  const enterAndScrollDown = () => {
+    todoItemsContainer.scrollTo({
+      top: todoItemsContainer.scrollHeight,
+      behavior: "smooth",
+    });
   };
 </script>
 
@@ -27,7 +77,8 @@
 >
   <Todo
     bind:value={todoValue}
-    on:enter={() => {
+    bind:itemsWrapperThis={todoItemsContainer}
+    on:enter={async () => {
       const dt = new Date();
       todoList = [
         ...todoList,
@@ -39,8 +90,9 @@
           deleted: false,
         },
       ];
-      console.log(todoList);
       todoValue = "";
+      await tick();
+      enterAndScrollDown();
     }}
   >
     {#each todoList as item (item.id)}

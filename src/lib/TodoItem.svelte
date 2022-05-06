@@ -14,17 +14,24 @@
 
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { fade } from "svelte/transition";
+  import dayjs from "dayjs";
 
   export let item: TodoItemType;
   const dispatch = createEventDispatcher<TodoItemEvents>();
+
+  const fmtTime = (t: Date) => {
+    return dayjs(t).format("YYYY-MM-DD HH:mm:ss");
+  };
 </script>
 
-<div class="flex items-center pt-4 pb-4">
+<div class="flex items-center pt-4 pb-4" transition:fade>
   <input type="checkbox" bind:checked={item.finished} />
   <div
-    class="ml-6 flex-1 mr-6 truncate transition-colors"
+    class="ml-6 flex-1 mr-6 truncate transition-colors cursor-pointer select-none"
     class:line-through={item.finished}
     class:text-gray-400={item.finished}
+    title={`${fmtTime(item.date)} | 点击查看详情`}
   >
     {item.text}
   </div>

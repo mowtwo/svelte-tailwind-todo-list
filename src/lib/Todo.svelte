@@ -8,6 +8,7 @@
   import { createEventDispatcher } from "svelte";
 
   export let value: string;
+  export let itemsWrapperThis: HTMLDivElement;
   const dispatch = createEventDispatcher<TodoEvents>();
 </script>
 
@@ -24,7 +25,10 @@
       />
     </div>
   </div>
-  <div class="pl-4 pr-4 max-h-[400px] overflow-y-auto">
+  <div
+    class="pl-4 pr-4 max-h-[400px] overflow-y-auto"
+    bind:this={itemsWrapperThis}
+  >
     <slot />
   </div>
 </div>
