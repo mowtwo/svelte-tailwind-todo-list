@@ -38,7 +38,7 @@
   <button
     class="text-red-400 h-[34px] w-[60px] border-red-400 border-solid border-[1px]"
     on:click={() => {
-      if (confirm(`Are you about to delete this item(id:${item.id})`)) {
+      if (confirm(`你确定要删除这个代办事项吗？(id:${item.id})`)) {
         dispatch("delete", item);
       }
     }}>删除</button

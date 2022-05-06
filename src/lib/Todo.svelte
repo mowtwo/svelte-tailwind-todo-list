@@ -19,7 +19,7 @@
         class="bg-transparent border-transparent outline-none w-[100%] h-[100%] box-border pr-4 pl-4"
         type="text"
         bind:value
-        placeholder="Enter something want to do"
+        placeholder="输入待办事项并按下`Enter`来创建"
         on:keydown={(e) =>
           e.key === "Enter" && value !== "" && dispatch("enter", value)}
       />
