@@ -16,12 +16,35 @@
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import dayjs from "dayjs";
+  import { abs } from "@/utils/Math";
 
   export let item: TodoItemType;
   const dispatch = createEventDispatcher<TodoItemEvents>();
 
   const fmtTime = (t: Date) => {
-    return dayjs(t).format("YYYY-MM-DD HH:mm:ss");
+    const d = dayjs(t);
+    const n = dayjs(Date.now());
+    const yearX = abs(d.year() - n.year());
+    if (yearX < 1) {
+      const monthX = abs(d.month() - n.month());
+      if (monthX < 1) {
+        const dateX = abs(d.date() - n.date());
+        if (dateX < 1) {
+          return `今天 ${d.format("HH:mm:ss")}`;
+        } else if (dateX < 2) {
+          return `昨天 ${d.format("HH:mm:ss")}`;
+        } else if (dateX < 3) {
+          return `前天 ${d.format("HH:mm:ss")}`;
+        }
+        return `本月 ${d.format("DD日 HH:mm")}`;
+      } else if (monthX < 2) {
+        return `上月 ${d.format("DD日 HH:mm")}`;
+      }
+      return `今年 ${d.format("MM月DD日")}`;
+    } else if (yearX < 2) {
+      return `去年 ${d.format("MM月DD日")}`;
+    }
+    return d.format("YYYY年MM月DD日");
   };
 </script>
 
