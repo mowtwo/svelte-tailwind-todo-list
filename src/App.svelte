@@ -124,9 +124,9 @@
         <TodoItem bind:item on:delete={handleDelete} on:edit={handleEdit} />
       {/if}
     {/each}
-    <div slot="left-tools" class="text-[14px] flex items-center">
+    <div slot="left-tools">
       {#if todoList.length > 0}
-        <div class="mt-4 mb-2">
+        <div class="mt-4 mb-2 text-[14px] flex items-center">
           显示已完成 <input
             type="checkbox"
             bind:checked={showFinished}
