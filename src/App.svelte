@@ -126,11 +126,13 @@
     {/each}
     <div slot="left-tools" class="text-[14px] flex items-center">
       {#if todoList.length > 0}
-        显示已完成 <input
-          type="checkbox"
-          bind:checked={showFinished}
-          class="ml-2"
-        />
+        <div class="mt-4 mb-2">
+          显示已完成 <input
+            type="checkbox"
+            bind:checked={showFinished}
+            class="ml-2"
+          />
+        </div>
       {/if}
     </div>
     <div slot="right-tools">

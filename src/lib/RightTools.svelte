@@ -7,7 +7,7 @@
   $: finishedTodos = todoList.filter((item) => item.finished);
 </script>
 
-<div class="flex items-center text-[10px] pt-4 pb-2">
+<div class="flex items-center text-[10px] mt-4 mb-2">
   <div class="mr-2 text-[14px]">
     已完成:<span class="text-gray-400 ml-1">{finishedTodos.length}</span>
   </div>
