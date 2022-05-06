@@ -4,30 +4,16 @@
 
 <script lang="ts">
   export let type: Type = "normal";
-  const getBgColorType = (c: string) => `text-${c}-400`;
-  const getBdColorType = (c: string) => `border-${c}-400`;
-
-  const joinColorType = (c: string) => {
-    return `${getBgColorType(c)} ${getBdColorType(c)}`;
-  };
-  const getColorType = (t: Type) => {
-    switch (t) {
-      case "important":
-        return joinColorType("red");
-      case "cancel":
-        return joinColorType("gray");
-      case "confirm":
-        return joinColorType("yellow");
-      default:
-        return joinColorType("blue");
-    }
-  };
 </script>
 
 <button
-  class="{getColorType(
-    type
-  )} h-[34px] w-[60px] border-solid border-[1px] select-none"
+  class="h-[34px] w-[60px] border-solid border-[1px] select-none text-blue-400 border-blue-400"
+  class:text-red-400={type === "important"}
+  class:border-red-400={type === "important"}
+  class:text-gray-400={type === "cancel"}
+  class:border-gray-400={type === "cancel"}
+  class:text-yellow-400={type === "confirm"}
+  class:border-yellow-400={type === "confirm"}
   on:click
 >
   <slot />
