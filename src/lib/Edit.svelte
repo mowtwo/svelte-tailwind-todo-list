@@ -25,12 +25,12 @@
 </script>
 
 <div
-  class="fixed z-20 w-[100vw] h-[100vh] bg-[rgba(0,0,0,.2)]"
+  class="fixed z-20 w-[100vw] h-[100vh] bg-[rgba(0,0,0,.2)] flex"
   on:click={() => dispatch("bgClick")}
   transition:fade
 >
   <div
-    class="bg-white w-[600px] mt-4 ml-auto mr-auto p-2 shadow-md"
+    class="bg-white w-[600px] mt-4 ml-auto mr-auto p-2 shadow-md mb-auto"
     transition:fly={{
       y: -50,
     }}
