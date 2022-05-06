@@ -6,6 +6,7 @@
   import { OPENED_FLAG, STORAGE_KEY } from "./data/constant";
   import { JSONStringify, ParseJSON } from "@/utils/JSON";
   import dayjs from "dayjs";
+  import Edit, { EditEvents } from "./lib/Edit.svelte";
   let todoList: TodoItemType[] = [];
   let todoValue = "";
   let opened = JSON.parse(localStorage.getItem(OPENED_FLAG) ?? "false");
@@ -63,6 +64,21 @@
       behavior: "smooth",
     });
   };
+  let showEdit = false;
+  let currentEdit: TodoItemType = null;
+  const handleEdit = (item: CustomEvent<TodoItemEvents["edit"]>) => {
+    currentEdit = item.detail;
+    showEdit = true;
+  };
+  const handleEditCancel = () => (showEdit = false);
+  const handleEditConfirm = (e: CustomEvent<EditEvents["confirm"]>) => {
+    const index = todoList.findIndex((fi) => fi.id === e.detail.id);
+    if (index >= 0) {
+      todoList[index] = e.detail;
+      todoList = todoList;
+    }
+    handleEditCancel();
+  };
 </script>
 
 <div class="fixed z-10 right-4 top-4">
@@ -96,7 +112,16 @@
     }}
   >
     {#each todoList as item (item.id)}
-      <TodoItem {item} on:delete={handleDelete} />
+      <TodoItem {item} on:delete={handleDelete} on:edit={handleEdit} />
     {/each}
   </Todo>
 </div>
+
+{#if showEdit}
+  <Edit
+    on:bgClick={handleEditCancel}
+    on:cancel={handleEditCancel}
+    on:confirm={handleEditConfirm}
+    item={currentEdit}
+  />
+{/if}

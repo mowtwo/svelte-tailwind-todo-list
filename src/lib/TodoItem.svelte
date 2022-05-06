@@ -9,6 +9,7 @@
 
   export interface TodoItemEvents {
     delete: TodoItemType;
+    edit: TodoItemType;
   }
 </script>
 
@@ -17,6 +18,7 @@
   import { fade } from "svelte/transition";
   import dayjs from "dayjs";
   import { abs } from "@/utils/Math";
+  import EventButton from "./EventButton.svelte";
 
   export let item: TodoItemType;
   const dispatch = createEventDispatcher<TodoItemEvents>();
@@ -55,15 +57,16 @@
     class:line-through={item.finished}
     class:text-gray-400={item.finished}
     title={`${fmtTime(item.date)} | 点击查看详情`}
+    on:click={() => dispatch("edit", item)}
   >
     {item.text}
   </div>
-  <button
-    class="text-red-400 h-[34px] w-[60px] border-red-400 border-solid border-[1px]"
+  <EventButton
+    type="important"
     on:click={() => {
       if (confirm(`你确定要删除这个代办事项吗？(id:${item.id})`)) {
         dispatch("delete", item);
       }
-    }}>删除</button
+    }}>删除</EventButton
   >
 </div>
