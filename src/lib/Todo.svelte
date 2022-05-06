@@ -7,7 +7,7 @@
   export let placeholder = "";
 </script>
 
-<div class="w-[600px] overflow-hidden bg-[#fff]">
+<div class="w-[600px] overflow-hidden bg-[#fff] shadow-md">
   <div class="flex items-center justify-center pt-2 pb-2">
     <TextFeild
       bind:value
