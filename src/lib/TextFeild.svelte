@@ -14,6 +14,7 @@
   export let maxlength = 400;
   export let showMaxLength = false;
   export let cleanable = true;
+  export let disabled = false;
 
   const dispatch = createEventDispatcher<TextFeildEvents>();
 
@@ -27,6 +28,7 @@
     class="bg-transparent border-transparent outline-none h-[100%] box-border pr-4 pl-4 flex-1"
     type="text"
     bind:value
+    {disabled}
     {placeholder}
     {maxlength}
     on:keydown={(e) =>

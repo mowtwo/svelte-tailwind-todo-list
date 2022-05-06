@@ -83,6 +83,11 @@
   };
 
   let showFinished = true;
+
+  $: limitTodoCount = todoList.length >= maxTodoCount;
+  $: todoPlaceholder = limitTodoCount
+    ? "事项数量已满 有事要及时处理掉 拒绝拖延症"
+    : "输入代办事项并按下`Enter`来创建";
 </script>
 
 <div class="fixed z-10 right-4 top-4">
@@ -98,6 +103,8 @@
   <Todo
     bind:value={todoValue}
     bind:itemsWrapperThis={todoItemsContainer}
+    disabled={maxTodoCount <= todoList.length}
+    placeholder={todoPlaceholder}
     on:enter={async () => {
       const dt = new Date();
       todoList = [

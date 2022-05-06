@@ -3,16 +3,19 @@
 
   export let value: string;
   export let itemsWrapperThis: HTMLDivElement = null;
+  export let disabled = false;
+  export let placeholder = "";
 </script>
 
 <div class="w-[600px] overflow-hidden bg-[#fff]">
   <div class="flex items-center justify-center pt-2 pb-2">
     <TextFeild
       bind:value
-      placeholder="输入待办事项并按下`Enter`来创建"
       on:enter
       maxlength={40}
       showMaxLength
+      {disabled}
+      {placeholder}
     />
   </div>
   <div class="flex items-center">
