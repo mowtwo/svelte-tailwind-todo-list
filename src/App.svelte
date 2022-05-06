@@ -7,7 +7,9 @@
   import { JSONStringify, ParseJSON } from "@/utils/JSON";
   import dayjs from "dayjs";
   import Edit, { EditEvents } from "./lib/Edit.svelte";
+  import RightTools from "./lib/RightTools.svelte";
   let todoList: TodoItemType[] = [];
+  const maxTodoCount = 60;
   let todoValue = "";
   let opened = JSON.parse(localStorage.getItem(OPENED_FLAG) ?? "false");
   let mounted = false;
@@ -79,6 +81,8 @@
     }
     handleEditCancel();
   };
+
+  let showFinished = true;
 </script>
 
 <div class="fixed z-10 right-4 top-4">
@@ -112,8 +116,28 @@
     }}
   >
     {#each todoList as item (item.id)}
-      <TodoItem {item} on:delete={handleDelete} on:edit={handleEdit} />
+      {#if !showFinished}
+        {#if !item.finished}
+          <TodoItem bind:item on:delete={handleDelete} on:edit={handleEdit} />
+        {/if}
+      {:else}
+        <TodoItem bind:item on:delete={handleDelete} on:edit={handleEdit} />
+      {/if}
     {/each}
+    <div slot="left-tools" class="text-[14px] flex items-center">
+      {#if todoList.length > 0}
+        显示已完成 <input
+          type="checkbox"
+          bind:checked={showFinished}
+          class="ml-2"
+        />
+      {/if}
+    </div>
+    <div slot="right-tools">
+      {#if todoList.length > 0}
+        <RightTools {todoList} {maxTodoCount} />
+      {/if}
+    </div>
   </Todo>
 </div>
 

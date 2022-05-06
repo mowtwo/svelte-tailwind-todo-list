@@ -38,7 +38,12 @@
   >
     <div class="font-bold text-[18px] pt-2 pb-4 text-center">代办事项详情</div>
     {#if editing}
-      <TextFeild bind:value={editing.text} placeholder="代办事项不能为空" />
+      <TextFeild
+        bind:value={editing.text}
+        maxlength={40}
+        showMaxLength
+        placeholder="代办事项不能为空"
+      />
     {/if}
     <div class="mt-8 ml-4 mr-4 text-right">
       <EventButton type="cancel" on:click={() => dispatch("cancel")}

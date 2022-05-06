@@ -50,7 +50,7 @@
   };
 </script>
 
-<div class="flex items-center pt-4 pb-4" transition:fade>
+<div class="flex items-center pt-4 pb-4" in:fade>
   <input type="checkbox" bind:checked={item.finished} />
   <div
     class="ml-6 flex-1 mr-6 truncate transition-colors cursor-pointer select-none"
