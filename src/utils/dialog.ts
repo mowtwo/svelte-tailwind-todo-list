@@ -1,7 +1,7 @@
 import Dialog from "@/lib/Dialog.svelte";
 import DialogContent from "@/lib/DialogContent.svelte";
-import { tick } from "svelte";
-import openRender, { append } from "./open-render";
+import type { SvelteComponent } from "svelte";
+import openRender from "./open-render";
 
 let dialogWrapper: Element;
 
@@ -70,11 +70,11 @@ export function show({
     })
   })
 
-
+  let conetent: SvelteComponent
   dialog.$on('opening', function () {
     const contentWrapper = dialog.$$.ctx?.[dialog.$$.props.SlotContentThis ?? -1]
     if (contentWrapper) {
-      cotentMount(contentWrapper);
+      conetent = cotentMount(contentWrapper);
     }
   })
 
@@ -94,6 +94,7 @@ export function show({
 
 
   dialog.$on('closed', function () {
+    conetent?.$destroy?.()
     dialog.$destroy();
     clearWrapper();
     onCancel?.()
