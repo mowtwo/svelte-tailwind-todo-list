@@ -6,8 +6,12 @@
   import { OPENED_FLAG, STORAGE_KEY } from "./data/constant";
   import { JSONStringify, ParseJSON } from "@/utils/JSON";
   import dayjs from "dayjs";
-  import Edit, { EditEvents } from "./lib/Edit.svelte";
+  import type { EditEvents } from "./lib/Edit.svelte";
   import RightTools from "./lib/RightTools.svelte";
+  import Dialog from "./lib/Dialog.svelte";
+  import DialogContent from "./lib/DialogContent.svelte";
+  import { show, showConfirm } from "./utils/dialog";
+  import Edit from "./lib/Edit.svelte";
   let todoList: TodoItemType[] = [];
   const maxTodoCount = 60;
   let todoValue = "";
@@ -68,7 +72,7 @@
   };
   let showEdit = false;
   let currentEdit: TodoItemType = null;
-  const handleEdit = (item: CustomEvent<TodoItemEvents["edit"]>) => {
+  const handleEdit = async (item: CustomEvent<TodoItemEvents["edit"]>) => {
     currentEdit = item.detail;
     showEdit = true;
   };

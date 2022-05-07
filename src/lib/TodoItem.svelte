@@ -19,6 +19,7 @@
   import dayjs from "dayjs";
   import { abs } from "@/utils/Math";
   import EventButton from "./EventButton.svelte";
+  import { showConfirm } from "@/utils/dialog";
 
   export let item: TodoItemType;
   const dispatch = createEventDispatcher<TodoItemEvents>();
@@ -63,8 +64,10 @@
   </div>
   <EventButton
     type="important"
-    on:click={() => {
-      if (confirm(`你确定要删除这个代办事项吗？(id:${item.id})`)) {
+    on:click={async () => {
+      if (
+        await showConfirm("提示", `你确定要删除这个代办事项吗？(id:${item.id})`)
+      ) {
         dispatch("delete", item);
       }
     }}>删除</EventButton
