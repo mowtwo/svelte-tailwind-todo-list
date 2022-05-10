@@ -4,6 +4,7 @@
 
 <script lang="ts">
   export let type: Type = "normal";
+  export let disabled = false;
 
   const textColorMapper: Record<Type, string> = {
     important: "text-red-400",
@@ -24,8 +25,9 @@
 </script>
 
 <button
-  class="h-[34px] w-[60px] border-solid border-[1px] select-none {textColor} {borderColor}"
+  class="h-[34px] w-[60px] border-solid border-[1px] select-none {textColor} {borderColor} disabled:text-gray-300 disabled:border-gray-200 disabled:cursor-not-allowed"
   on:click
+  {disabled}
 >
   <slot />
 </button>

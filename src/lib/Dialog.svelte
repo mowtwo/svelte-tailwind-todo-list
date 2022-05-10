@@ -22,7 +22,9 @@
   export let showConfirm = true;
   export let openAndShow = false;
   export let confirmText = "确定";
+  export let confirmDisabled = false;
   export let cancelText = "取消";
+  export let cancelDisabled = false;
   export let openOnInited = false;
   export let SlotContentThis: HTMLDivElement = null;
   export let size: Size = "md";
@@ -85,13 +87,18 @@
         {#if showCancel || showConfirm}
           <div class="mt-8 ml-4 mr-4 text-right">
             {#if showCancel}
-              <EventButton type="cancel" on:click={() => dispatch("cancel")}>
+              <EventButton
+                type="cancel"
+                on:click={() => dispatch("cancel")}
+                disabled={cancelDisabled}
+              >
                 {cancelText}
               </EventButton>
             {/if}
             {#if showConfirm}
-              <EventButton on:click={() => dispatch("confirm")}
-                >{confirmText}</EventButton
+              <EventButton
+                on:click={() => dispatch("confirm")}
+                disabled={confirmDisabled}>{confirmText}</EventButton
               >
             {/if}
           </div>

@@ -165,6 +165,7 @@
   on:confirm={handleEditConfirm}
   confirmText="修改"
   bind:openAndShow={showEdit}
+  confirmDisabled={!currentEdit || currentEdit.text === ""}
 >
   <Edit bind:item={currentEdit} />
 </Dialog>
