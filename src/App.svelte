@@ -2,7 +2,7 @@
   import Todo from "./lib/Todo.svelte";
   import TodoItem, { TodoItemEvents } from "./lib/TodoItem.svelte";
   import type { TodoItemType } from "./lib/TodoItem.svelte";
-  import { onMount, tick } from "svelte";
+  import { onMount, setContext, tick } from "svelte";
   import { OPENED_FLAG, STORAGE_KEY } from "./data/constant";
   import { JSONStringify, ParseJSON } from "@/utils/JSON";
   import dayjs from "dayjs";
@@ -10,6 +10,12 @@
   import type { DialogEvents } from "./lib/Dialog.svelte";
   import Edit from "./lib/Edit.svelte";
   import Dialog from "./lib/Dialog.svelte";
+  import { Config, initValue, key } from "./context/config";
+
+  void setContext<Config>(key, initValue);
+
+  $: forkRepo = initValue.repo;
+
   let todoList: TodoItemType[] = [];
   const maxTodoCount = 60;
   let todoValue = "";
@@ -95,8 +101,8 @@
 
 <div class="fixed z-10 right-4 top-4">
   <a
-    class="inline-block pt-2 pb-2 pl-4 pr-4 bg-black text-white"
-    href="https://github.com/mowtwo/svelte-tailwind-todo-list">Fork</a
+    class="inline-block pt-2 pb-2 pl-4 pr-4 bg-black text-white underline underline-offset-2 underline-transparent hover:underline-white"
+    href={forkRepo}>Fork</a
   >
 </div>
 
