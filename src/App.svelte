@@ -102,7 +102,7 @@
 <div class="fixed z-10 right-4 top-4">
   <a
     class="inline-block pt-2 pb-2 pl-4 pr-4 bg-black text-white underline underline-offset-2 underline-transparent hover:underline-white"
-    href={forkRepo}>Fork</a
+    href={forkRepo}>DevFork</a
   >
 </div>
 
