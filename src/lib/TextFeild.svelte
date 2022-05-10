@@ -38,7 +38,7 @@
     on:keyup
     on:keypress
   />
-  {#if cleanable && value.length > 0}
+  {#if cleanable && value && value.length > 0}
     <div
       class="text-white bg-cool-gray-400 w-4 h-4 flex items-center justify-center mr-4 cursor-pointer rounded-md leading-4"
       title="清空"

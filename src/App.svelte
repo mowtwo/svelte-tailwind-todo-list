@@ -6,12 +6,10 @@
   import { OPENED_FLAG, STORAGE_KEY } from "./data/constant";
   import { JSONStringify, ParseJSON } from "@/utils/JSON";
   import dayjs from "dayjs";
-  import type { EditEvents } from "./lib/Edit.svelte";
   import RightTools from "./lib/RightTools.svelte";
-  import Dialog from "./lib/Dialog.svelte";
-  import DialogContent from "./lib/DialogContent.svelte";
-  import { show, showConfirm } from "./utils/dialog";
+  import type { DialogEvents } from "./lib/Dialog.svelte";
   import Edit from "./lib/Edit.svelte";
+  import Dialog from "./lib/Dialog.svelte";
   let todoList: TodoItemType[] = [];
   const maxTodoCount = 60;
   let todoValue = "";
@@ -73,16 +71,17 @@
   let showEdit = false;
   let currentEdit: TodoItemType = null;
   const handleEdit = async (item: CustomEvent<TodoItemEvents["edit"]>) => {
-    currentEdit = item.detail;
+    currentEdit = { ...item.detail };
     showEdit = true;
   };
   const handleEditCancel = () => (showEdit = false);
-  const handleEditConfirm = (e: CustomEvent<EditEvents["confirm"]>) => {
-    const index = todoList.findIndex((fi) => fi.id === e.detail.id);
+  const handleEditConfirm = (e: CustomEvent<DialogEvents["confirm"]>) => {
+    const index = todoList.findIndex((fi) => fi.id === currentEdit.id);
     if (index >= 0) {
-      todoList[index] = e.detail;
+      todoList[index] = { ...currentEdit };
       todoList = todoList;
     }
+    currentEdit = null;
     handleEditCancel();
   };
 
@@ -154,11 +153,12 @@
   </Todo>
 </div>
 
-{#if showEdit}
-  <Edit
-    on:bgClick={handleEditCancel}
-    on:cancel={handleEditCancel}
-    on:confirm={handleEditConfirm}
-    item={currentEdit}
-  />
-{/if}
+<Dialog
+  on:bgClick={handleEditCancel}
+  on:cancel={handleEditCancel}
+  on:confirm={handleEditConfirm}
+  confirmText="修改"
+  bind:openAndShow={showEdit}
+>
+  <Edit bind:item={currentEdit} />
+</Dialog>
