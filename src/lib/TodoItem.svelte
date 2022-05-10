@@ -1,10 +1,15 @@
 <script lang="ts" context="module">
+  export interface TodoItemOptions {
+    
+  }
+
   export interface TodoItemType {
     id: number;
     text: string;
     finished: boolean;
     date: Date;
     deleted: boolean;
+    options?: TodoItemOptions;
   }
 
   export interface TodoItemEvents {
