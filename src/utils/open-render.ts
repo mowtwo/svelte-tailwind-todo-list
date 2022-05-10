@@ -2,7 +2,7 @@ import type { SvelteComponent } from "svelte";
 import { mount_component } from "svelte/internal"
 
 export default function openRender<CT extends typeof SvelteComponent>(C: CT) {
-  return function factory(props: Record<string, any>) {
+  return function factory(props: ConstructorParameters<CT>[0]['props']) {
     let c: SvelteComponent;
     return function mount(target: Element) {
       return c = new C({ target, props });

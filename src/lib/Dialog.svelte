@@ -8,11 +8,12 @@
     opening: undefined;
     closing: undefined;
   }
+
+  export type Size = "md" | "lg" | "sm";
 </script>
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import { loop_guard } from "svelte/internal";
   import { fly, fade } from "svelte/transition";
   import EventButton from "./EventButton.svelte";
 
@@ -24,6 +25,7 @@
   export let cancelText = "取消";
   export let openOnInited = false;
   export let SlotContentThis: HTMLDivElement = null;
+  export let size: Size = "md";
 
   const dispatch = createEventDispatcher<DialogEvents>();
 
@@ -32,6 +34,14 @@
       openAndShow = true;
     }
   });
+
+  const sizeMapper: Record<Size, string> = {
+    md: "w-[600px]",
+    lg: "w-[800px]",
+    sm: "w-[400px]",
+  };
+
+  $: sizeClass = sizeMapper[size];
 </script>
 
 <div>
@@ -62,7 +72,7 @@
       }}
     >
       <div
-        class="bg-white w-[600px] mt-4 ml-auto mr-auto p-2 shadow-md mb-auto"
+        class="bg-white mt-4 ml-auto mr-auto p-2 shadow-md mb-auto {sizeClass}"
         transition:fly={{
           y: -50,
         }}

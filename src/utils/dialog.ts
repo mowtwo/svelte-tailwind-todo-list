@@ -55,7 +55,7 @@ export function show({
     cancelText,
     showCancel,
     showConfirm,
-
+    size: 'sm'
   })
 
 
@@ -119,3 +119,15 @@ export function showConfirm(title: string, text: string = '') {
     })
   })
 }
+
+export function showAlert(title: string, text: string = '') {
+  return new Promise(resolve => {
+    show({
+      title, text,
+      showCancel: false,
+      onConfirm() {
+        resolve(true)
+      }
+    })
+  })
+} 
